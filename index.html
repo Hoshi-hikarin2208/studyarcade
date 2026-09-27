@@ -1,0 +1,1577 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Study Almanac</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Old+Standard+TT:ital,wght@0,400;0,700;1,400&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #ece0c3;
+    --paper-2: #ded0a5;
+    --paper-3: #f5ecd6;
+    --ink: #2b2018;
+    --ink-soft: #5b4a34;
+    --rust: #a8461f;
+    --brass: #8a6d3b;
+    --brass-light: #c7a35a;
+    --shadow-hard: #b8a374;
+    --line: #a9946a;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #211a12;
+      --paper-2: #2c2318;
+      --paper-3: #17120c;
+      --ink: #e9dcc0;
+      --ink-soft: #c3ae87;
+      --rust: #e08454;
+      --brass: #c7a35a;
+      --brass-light: #e6c988;
+      --shadow-hard: #0c0906;
+      --line: #4a3c27;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #211a12;
+    --paper-2: #2c2318;
+    --paper-3: #17120c;
+    --ink: #e9dcc0;
+    --ink-soft: #c3ae87;
+    --rust: #e08454;
+    --brass: #c7a35a;
+    --brass-light: #e6c988;
+    --shadow-hard: #0c0906;
+    --line: #4a3c27;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background-color: var(--paper);
+    background-image:
+      radial-gradient(circle at 1px 1px, var(--ink) 0.6px, transparent 1.2px),
+      repeating-linear-gradient(0deg, rgba(0,0,0,0.025) 0px, rgba(0,0,0,0.025) 1px, transparent 1px, transparent 3px);
+    background-size: 5px 5px, 100% 3px;
+    background-attachment: fixed;
+    color: var(--ink);
+    font-family: 'Old Standard TT', Georgia, 'Times New Roman', serif;
+    line-height: 1.5;
+    min-height: 100vh;
+    opacity: 1;
+  }
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(ellipse at center, transparent 45%, rgba(20,14,8,0.18) 100%);
+    z-index: 1;
+  }
+  .mono { font-family: 'Courier Prime', 'Courier New', monospace; }
+  a { color: var(--rust); }
+  ::selection { background: var(--brass-light); color: var(--ink); }
+
+  .wrap { position: relative; z-index: 2; max-width: 1100px; margin: 0 auto; padding: 18px 16px 60px; }
+
+  /* Masthead */
+  .masthead { text-align: center; padding: 18px 8px 16px; border-bottom: 3px double var(--ink); margin-bottom: 6px; }
+  .masthead-logo { display: inline-flex; align-items: center; justify-content: center; gap: 10px; }
+  .masthead h1 {
+    font-family: 'Old Standard TT', Georgia, serif;
+    font-size: clamp(28px, 5vw, 46px);
+    letter-spacing: 1px;
+    margin: 6px 0 4px;
+    font-weight: 700;
+  }
+  .masthead .tagline {
+    font-family: 'Courier Prime', monospace;
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    letter-spacing: 0.4px;
+  }
+  .masthead .rule {
+    margin: 10px auto 0;
+    width: 60%;
+    border: none;
+    border-top: 1px solid var(--line);
+  }
+
+  .capability-banner {
+    display: none;
+    background: var(--paper-3);
+    border: 2px solid var(--rust);
+    color: var(--ink);
+    padding: 10px 14px;
+    margin: 14px 0;
+    font-family: 'Courier Prime', monospace;
+    font-size: 13px;
+  }
+  .capability-banner.show { display: block; }
+
+  /* Layout */
+  .layout { display: grid; grid-template-columns: 220px 1fr; gap: 18px; margin-top: 18px; align-items: start; }
+  @media (max-width: 760px) {
+    .layout { grid-template-columns: 1fr; }
+  }
+
+  nav.tabs { display: flex; flex-direction: column; gap: 6px; position: sticky; top: 12px; }
+  @media (max-width: 760px) {
+    nav.tabs { flex-direction: row; overflow-x: auto; position: static; padding-bottom: 4px; }
+    nav.tabs .tab-btn { flex: 0 0 auto; }
+  }
+  .tab-btn {
+    display: flex; align-items: center; gap: 10px;
+    background: var(--paper-2);
+    border: 2px solid var(--ink);
+    color: var(--ink);
+    font-family: 'Old Standard TT', Georgia, serif;
+    font-size: 14.5px;
+    padding: 9px 12px;
+    cursor: pointer;
+    text-align: left;
+    box-shadow: 3px 3px 0 var(--shadow-hard);
+    border-left: 8px solid var(--brass);
+    white-space: nowrap;
+  }
+  .tab-btn:hover { background: var(--paper-3); }
+  .tab-btn.active {
+    border-left-color: var(--rust);
+    background: var(--paper-3);
+    transform: translate(1px, 1px);
+    box-shadow: 2px 2px 0 var(--shadow-hard);
+  }
+  .tab-btn .pixel-icon { flex: 0 0 auto; image-rendering: pixelated; }
+
+  main.panels { min-width: 0; }
+  .panel { display: none; }
+  .panel.active { display: block; }
+
+  .card {
+    background: var(--paper-3);
+    border: 2px solid var(--ink);
+    box-shadow: 5px 5px 0 var(--shadow-hard);
+    padding: 20px;
+    margin-bottom: 18px;
+  }
+  .card h2 {
+    font-size: 22px;
+    margin: 0 0 4px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .card .subhead { color: var(--ink-soft); font-size: 13.5px; margin: 0 0 16px; font-style: italic; }
+
+  .btn {
+    font-family: 'Courier Prime', monospace;
+    font-size: 13.5px;
+    background: var(--brass);
+    color: var(--paper-3);
+    border: 2px solid var(--ink);
+    padding: 10px 16px;
+    cursor: pointer;
+    box-shadow: 3px 3px 0 var(--shadow-hard);
+  }
+  .btn:hover:not(:disabled) { background: var(--brass-light); }
+  .btn:active:not(:disabled) { transform: translate(3px, 3px); box-shadow: none; }
+  .btn:disabled { opacity: 0.45; cursor: not-allowed; }
+  .btn-primary { background: var(--rust); }
+  .btn-primary:hover:not(:disabled) { background: #c2582f; }
+  .btn-quiet {
+    background: transparent; color: var(--ink); box-shadow: none;
+    border: 1px solid var(--line);
+  }
+  .btn-row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin-top: 14px; }
+
+  .notice {
+    font-family: 'Courier Prime', monospace;
+    font-size: 12.5px;
+    margin-top: 10px;
+    color: var(--rust);
+    display: none;
+  }
+  .notice.show { display: block; }
+  .muted { color: var(--ink-soft); font-size: 14px; }
+
+  /* Reading room */
+  .dropzone {
+    border: 3px dashed var(--brass);
+    padding: 28px 16px;
+    text-align: center;
+    cursor: pointer;
+    background: var(--paper-2);
+  }
+  .dropzone.drag { background: var(--paper-3); border-color: var(--rust); }
+  .dropzone p { margin: 6px 0; }
+  .dropzone .big { font-size: 17px; }
+  .dropzone .small { font-size: 12.5px; color: var(--ink-soft); font-family: 'Courier Prime', monospace; }
+  #fileInput { display: none; }
+
+  ul.source-list { list-style: none; margin: 16px 0 0; padding: 0; display: grid; gap: 8px; }
+  .source-card {
+    display: flex; align-items: center; gap: 10px;
+    background: var(--paper-2);
+    border: 1px solid var(--line);
+    padding: 8px 10px;
+  }
+  .src-thumb { width: 34px; height: 34px; object-fit: cover; border: 1px solid var(--ink); filter: sepia(0.5) contrast(1.05); }
+  .src-icon { display: flex; align-items: center; justify-content: center; width: 34px; height: 34px; }
+  .src-info { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+  .src-name { font-size: 14px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .src-meta { font-family: 'Courier Prime', monospace; font-size: 11.5px; color: var(--ink-soft); }
+  .src-remove {
+    background: none; border: 1px solid var(--line); color: var(--ink);
+    width: 26px; height: 26px; cursor: pointer; font-size: 15px; line-height: 1;
+  }
+  .src-remove:hover { background: var(--rust); color: var(--paper-3); border-color: var(--rust); }
+
+  /* Digest */
+  .sheet-title { font-size: 24px; margin: 0 0 14px; border-bottom: 2px solid var(--ink); padding-bottom: 8px; }
+  .digest-section h3 { font-size: 17px; margin: 18px 0 6px; color: var(--ink); }
+  .digest-section ul { margin: 0 0 4px; padding-left: 20px; }
+  .digest-section li { margin-bottom: 5px; }
+  .glossary { margin-top: 22px; border-top: 1px solid var(--line); padding-top: 14px; }
+  .glossary dt { font-weight: 700; font-family: 'Courier Prime', monospace; font-size: 13.5px; margin-top: 8px; }
+  .glossary dd { margin: 2px 0 0 0; color: var(--ink-soft); }
+
+  /* Exam */
+  .exam-q { margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px dashed var(--line); }
+  .exam-q-text { font-size: 16px; margin: 0 0 10px; }
+  .exam-options { display: grid; gap: 7px; }
+  .exam-opt {
+    text-align: left; font-family: 'Old Standard TT', Georgia, serif; font-size: 14.5px;
+    background: var(--paper-2); border: 1px solid var(--line); color: var(--ink);
+    padding: 8px 10px; cursor: pointer;
+  }
+  .exam-opt:hover:not(:disabled) { background: var(--paper); }
+  .exam-opt.selected { border-color: var(--rust); background: var(--paper); }
+  .exam-opt.correct { background: #cddcb0; border-color: #4b6b2c; }
+  :root[data-theme="dark"] .exam-opt.correct { background: #4f493c; border-color: #9caf67; }
+  .exam-opt.incorrect { background: #e3b7ab; border-color: var(--rust); }
+  .exam-explain { font-size: 13.5px; color: var(--ink-soft); margin-top: 8px; font-style: italic; }
+  .score-line { font-family: 'Courier Prime', monospace; font-size: 16px; margin-bottom: 16px; }
+  .exam-controls { display: flex; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; }
+  .count-choice { display: inline-flex; border: 1px solid var(--ink); }
+  .count-choice button {
+    background: var(--paper-2); border: none; border-right: 1px solid var(--ink);
+    padding: 7px 12px; cursor: pointer; font-family: 'Courier Prime', monospace; font-size: 13px; color: var(--ink);
+  }
+  .count-choice button:last-child { border-right: none; }
+  .count-choice button.active { background: var(--brass); color: var(--paper-3); }
+
+  /* Flashcards */
+  .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 12px; margin-top: 16px; }
+  .flip-card { perspective: 900px; height: 130px; cursor: pointer; }
+  .flip-inner {
+    position: relative; width: 100%; height: 100%;
+    transition: transform 0.5s; transform-style: preserve-3d;
+  }
+  .flip-card.flipped .flip-inner { transform: rotateY(180deg); }
+  .flip-face {
+    position: absolute; inset: 0; backface-visibility: hidden;
+    border: 2px solid var(--ink); display: flex; align-items: center; justify-content: center;
+    text-align: center; padding: 10px; font-size: 13.5px; overflow: auto;
+  }
+  .flip-front { background: var(--paper-2); }
+  .flip-back { background: var(--paper); transform: rotateY(180deg); color: var(--ink-soft); }
+
+  /* Correspondence */
+  .chat-log { display: flex; flex-direction: column; gap: 12px; max-height: 420px; overflow-y: auto; padding-right: 4px; margin-bottom: 14px; }
+  .letter { max-width: 82%; padding: 10px 12px; border: 1px solid var(--line); font-size: 14.5px; }
+  .letter.mine { align-self: flex-end; background: var(--paper-2); border-color: var(--brass); }
+  .letter.theirs { align-self: flex-start; background: var(--paper); }
+  .letter .who { font-family: 'Courier Prime', monospace; font-size: 10.5px; color: var(--ink-soft); display: block; margin-bottom: 4px; }
+  .chat-input-row { display: flex; gap: 8px; }
+  .chat-input-row textarea {
+    flex: 1; font-family: 'Old Standard TT', Georgia, serif; font-size: 14.5px;
+    background: var(--paper-2); border: 1px solid var(--ink); padding: 8px; resize: vertical; min-height: 44px; color: var(--ink);
+  }
+
+  /* Lantern */
+  .lantern-screen {
+    background: radial-gradient(ellipse at center, var(--paper-3) 55%, var(--paper-2) 100%);
+    border: 6px solid var(--ink);
+    min-height: 260px;
+    padding: 30px 34px;
+    display: flex; flex-direction: column; justify-content: center;
+    box-shadow: inset 0 0 40px rgba(0,0,0,0.25);
+  }
+  .lantern-screen h3 { font-size: 24px; margin: 0 0 14px; }
+  .lantern-screen ul { margin: 0; padding-left: 22px; font-size: 16px; }
+  .lantern-screen li { margin-bottom: 8px; }
+  .lantern-controls { display: flex; align-items: center; justify-content: center; gap: 16px; margin-top: 14px; }
+  .lantern-controls .knob {
+    width: 40px; height: 40px; border-radius: 50%; border: 2px solid var(--ink);
+    background: var(--brass); color: var(--paper-3); font-size: 16px; cursor: pointer;
+    box-shadow: 2px 2px 0 var(--shadow-hard);
+  }
+  .lantern-controls .knob:disabled { opacity: 0.4; cursor: not-allowed; }
+  .lantern-counter { font-family: 'Courier Prime', monospace; font-size: 13px; color: var(--ink-soft); min-width: 110px; text-align: center; }
+
+  footer.foot {
+    text-align: center; margin-top: 30px; font-family: 'Courier Prime', monospace;
+    font-size: 11px; color: var(--ink-soft); border-top: 1px solid var(--line); padding-top: 12px;
+  }
+
+  .thinking { font-family: 'Courier Prime', monospace; font-size: 13px; color: var(--ink-soft); }
+  .thinking::after { content: ''; display: inline-block; width: 1.2em; text-align: left; animation: dots 1.2s steps(4) infinite; }
+  @keyframes dots { 0% { content: ''; } }
+
+  select.plain {
+    font-family: 'Courier Prime', monospace; background: var(--paper-2); color: var(--ink);
+    border: 1px solid var(--ink); padding: 6px 8px;
+  }
+</style>
+
+<style id="arcade-1900s-theme">
+/* =========================================================
+   STUDY ALMANAC — PIXEL ARCADE / 1900s INSPIRED THEME
+   ========================================================= */
+:root {
+  --arcade-ink:#211a1a;
+  --arcade-paper:#f3e6c8;
+  --arcade-paper2:#e7d4ae;
+  --arcade-red:#a9342b;
+  --arcade-gold:#d59a32;
+  --arcade-teal:#276b68;
+  --arcade-blue:#31567b;
+  --arcade-shadow:#3a2920;
+  --pixel-font:"Courier New", monospace;
+}
+
+html { background:var(--arcade-ink); }
+body {
+  font-family:var(--pixel-font) !important;
+  color:var(--arcade-ink) !important;
+  background:
+    radial-gradient(circle at 25% 20%, rgba(255,255,255,.09) 0 1px, transparent 2px),
+    radial-gradient(circle at 75% 70%, rgba(0,0,0,.08) 0 1px, transparent 2px),
+    repeating-linear-gradient(0deg, rgba(70,45,25,.07) 0 1px, transparent 1px 4px),
+    linear-gradient(135deg,#c7ae7b,#ead9b4 42%,#b99963);
+  background-size: 9px 9px, 13px 13px, 100% 5px, 100% 100%;
+  image-rendering:pixelated;
+}
+body::before {
+  content:"";
+  position:fixed; inset:0; pointer-events:none; z-index:9999;
+  background:repeating-linear-gradient(0deg,rgba(0,0,0,.045) 0 1px,transparent 1px 3px);
+  mix-blend-mode:multiply;
+}
+body::after {
+  content:"";
+  position:fixed; inset:0; pointer-events:none; z-index:9998;
+  box-shadow:inset 0 0 130px rgba(35,22,14,.42);
+}
+
+header, .header, nav, .topbar, .app-header {
+  border-bottom:4px solid var(--arcade-ink) !important;
+  box-shadow:0 5px 0 rgba(33,26,26,.55), 0 11px 0 rgba(213,154,50,.55) !important;
+  background:linear-gradient(#f7e9c9,#d8bd88) !important;
+}
+
+main, .container, .app, .content, .page {
+  filter:sepia(.08);
+}
+
+button, input, textarea, select {
+  font-family:var(--pixel-font) !important;
+}
+
+button {
+  border:3px solid var(--arcade-ink) !important;
+  border-radius:2px !important;
+  background:var(--arcade-paper) !important;
+  color:var(--arcade-ink) !important;
+  box-shadow:4px 4px 0 var(--arcade-shadow) !important;
+  transition:transform .08s steps(2), box-shadow .08s steps(2), background .15s linear !important;
+}
+button:hover {
+  background:#fff1bd !important;
+  transform:translate(-2px,-2px) !important;
+  box-shadow:6px 6px 0 var(--arcade-shadow) !important;
+}
+button:active {
+  transform:translate(3px,3px) !important;
+  box-shadow:1px 1px 0 var(--arcade-shadow) !important;
+}
+
+input, textarea, select {
+  border:3px solid var(--arcade-ink) !important;
+  border-radius:2px !important;
+  background:#fff7dc !important;
+  box-shadow:inset 3px 3px 0 rgba(33,26,26,.12) !important;
+}
+
+.card, .panel, .section, .modal, .dropzone, .file-card, .study-card {
+  border:3px solid var(--arcade-ink) !important;
+  border-radius:2px !important;
+  background:
+    repeating-linear-gradient(0deg,rgba(100,70,30,.035) 0 1px,transparent 1px 4px),
+    var(--arcade-paper) !important;
+  box-shadow:7px 7px 0 var(--arcade-shadow) !important;
+}
+
+h1,h2,h3,h4,.title,.brand {
+  font-family:Impact,"Arial Black",var(--pixel-font),sans-serif !important;
+  letter-spacing:.08em !important;
+  text-transform:uppercase;
+  text-shadow:2px 2px 0 #d59a32, 4px 4px 0 rgba(33,26,26,.18);
+}
+
+a { color:var(--arcade-red) !important; }
+
+.dropzone {
+  position:relative;
+  overflow:hidden;
+  border-style:dashed !important;
+}
+.dropzone::after {
+  content:"DROP YOUR NOTES HERE";
+  position:absolute; right:14px; bottom:10px;
+  font-size:10px; letter-spacing:2px; opacity:.42;
+}
+
+.arcade-toolkit {
+  max-width:1100px;
+  margin:28px auto;
+  padding:0;
+  border:4px solid var(--arcade-ink);
+  background:#d8bd88;
+  box-shadow:9px 9px 0 var(--arcade-shadow), 0 0 0 5px #d59a32;
+  position:relative;
+  overflow:hidden;
+}
+.arcade-toolkit::before {
+  content:"";
+  position:absolute; inset:0;
+  pointer-events:none;
+  background:
+    repeating-linear-gradient(90deg,transparent 0 23px,rgba(33,26,26,.04) 23px 24px),
+    repeating-linear-gradient(0deg,transparent 0 23px,rgba(33,26,26,.04) 23px 24px);
+}
+.arcade-panel-title {
+  display:flex; align-items:center; justify-content:space-between;
+  gap:15px; padding:12px 16px;
+  background:var(--arcade-ink); color:#f5d989;
+  border-bottom:4px solid var(--arcade-red);
+  font-weight:900; letter-spacing:2px;
+}
+.arcade-panel-title small { font-size:10px; opacity:.8; }
+.tool-grid {
+  position:relative; z-index:1;
+  display:grid; grid-template-columns:repeat(4,1fr); gap:12px;
+  padding:18px;
+}
+.arcade-tool {
+  min-height:92px; display:grid; grid-template-columns:38px 1fr;
+  grid-template-rows:1fr auto; text-align:left; padding:12px !important;
+  background:var(--arcade-paper) !important;
+}
+.arcade-tool b {
+  grid-row:1/3; align-self:center; font-size:25px; color:var(--arcade-red);
+}
+.arcade-tool span { font-weight:900; font-size:13px; letter-spacing:1px; }
+.arcade-tool small { font-size:9px; opacity:.65; }
+.arcade-status {
+  position:relative; z-index:1;
+  display:flex; justify-content:space-between;
+  padding:9px 15px; background:var(--arcade-teal); color:#f5e8bd;
+  border-top:4px solid var(--arcade-ink); font-size:11px; letter-spacing:1px;
+}
+#focusClock { color:#ffe18a; font-weight:900; }
+
+@keyframes pixelBlink {
+  0%,45% { opacity:1; }
+  46%,100% { opacity:.45; }
+}
+.arcade-status span:first-child { animation:pixelBlink 1.25s steps(2) infinite; }
+
+@keyframes cabinetGlow {
+  0%,100% { box-shadow:9px 9px 0 var(--arcade-shadow), 0 0 0 5px #d59a32; }
+  50% { box-shadow:9px 9px 0 var(--arcade-shadow), 0 0 0 5px #a9342b; }
+}
+.arcade-toolkit { animation:cabinetGlow 3.2s steps(4) infinite; }
+
+@media(max-width:800px) {
+  .tool-grid { grid-template-columns:repeat(2,1fr); }
+  .arcade-panel-title { flex-direction:column; align-items:flex-start; }
+}
+@media(max-width:480px) {
+  .tool-grid { grid-template-columns:1fr; }
+}
+</style>
+
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="masthead-logo" id="logoMount"></div>
+    <h1>The Study Almanac</h1>
+    <div class="tagline">A Companion for the Diligent Scholar — Compiled Fresh From Your Own Papers</div>
+    <hr class="rule">
+  </header>
+
+  <div class="capability-banner" id="capBanner">
+      <strong>Standalone mode:</strong> files are processed in your browser. Uploads, summaries, quizzes, flashcards, notes, and downloads work without the Claude window.
+    </div>
+
+  <div class="layout">
+    <nav class="tabs" id="tabNav"></nav>
+
+    <main class="panels">
+
+      <!-- READING ROOM -->
+      <section class="panel active" id="panel-reading">
+        <div class="card">
+          <h2>The Reading Room</h2>
+          <p class="subhead">Bring in the papers, photographs, and notes you mean to study. Everything stays on this page.</p>
+          <div class="dropzone" id="dropzone">
+            <p class="big">Drop files here, or click to choose</p>
+            <p class="small">PDF · PNG · JPG · WEBP · GIF · TXT · MD · HTML · CSV · DOCX</p>
+            <button type="button" class="btn btn-primary" id="chooseFilesBtn">Choose Files</button>
+            <input type="file" id="fileInput" multiple
+              accept=".pdf,.png,.jpg,.jpeg,.webp,.gif,.txt,.md,.html,.htm,.csv,.docx">
+          </div>
+          <ul class="source-list" id="sourceList"></ul>
+          <p class="muted" id="sourceEmpty" style="margin-top:14px;">No materials yet — the shelves are empty.</p>
+        </div>
+      </section>
+
+      <!-- DIGEST -->
+      <section class="panel" id="panel-digest">
+        <div class="card">
+          <h2>The Digest</h2>
+          <p class="subhead">A composed summary of your materials — headings, key points, and a glossary of terms.</p>
+          <div class="btn-row">
+            <button class="btn btn-primary" id="composeDigestBtn">Compose the Digest</button>
+            <button class="btn btn-quiet" id="downloadDigestBtn" style="display:none;">Print a Copy (.md)</button>
+          </div>
+          <p class="notice" id="digestNotice"></p>
+          <div id="digestBody" style="margin-top:18px;"></div>
+        </div>
+      </section>
+
+      <!-- EXAMINATION -->
+      <section class="panel" id="panel-exam">
+        <div class="card">
+          <h2>Examination Hall</h2>
+          <p class="subhead">Set yourself a paper, and see how you fare.</p>
+          <div class="exam-controls">
+            <span class="mono" style="font-size:13px;align-self:center;">Questions:</span>
+            <div class="count-choice" id="examCountChoice">
+              <button data-n="5">5</button>
+              <button data-n="10" class="active">10</button>
+              <button data-n="15">15</button>
+            </div>
+          </div>
+          <div class="btn-row">
+            <button class="btn btn-primary" id="setExamBtn">Set the Examination</button>
+            <button class="btn btn-quiet" id="downloadExamBtn" style="display:none;">Copy the Examination (.txt)</button>
+          </div>
+          <p class="notice" id="examNotice"></p>
+          <div id="examBody" style="margin-top:18px;"></div>
+        </div>
+      </section>
+
+      <!-- RECITATION CARDS -->
+      <section class="panel" id="panel-cards">
+        <div class="card">
+          <h2>Recitation Cards</h2>
+          <p class="subhead">Short cards for quick review. Click a card to turn it over.</p>
+          <div class="btn-row">
+            <button class="btn btn-primary" id="cutCardsBtn">Cut a New Set of Cards</button>
+            <button class="btn btn-quiet" id="shuffleCardsBtn" style="display:none;">Shuffle</button>
+          </div>
+          <p class="notice" id="cardsNotice"></p>
+          <div class="cards-grid" id="cardsGrid"></div>
+        </div>
+      </section>
+
+      <!-- CORRESPONDENCE -->
+      <section class="panel" id="panel-letters">
+        <div class="card">
+          <h2>Correspondence</h2>
+          <p class="subhead">Write in with a question about your materials, and await a reply.</p>
+          <div class="chat-log" id="chatLog"></div>
+          <div class="chat-input-row">
+            <textarea id="chatInput" placeholder="Ask something about your materials..."></textarea>
+            <button class="btn btn-primary" id="sendLetterBtn">Post</button>
+          </div>
+          <div class="btn-row">
+            <button class="btn btn-quiet" id="clearLettersBtn">Start a New Correspondence</button>
+          </div>
+          <p class="notice" id="lettersNotice"></p>
+        </div>
+      </section>
+
+      <!-- MAGIC LANTERN -->
+      <section class="panel" id="panel-lantern">
+        <div class="card">
+          <h2>Magic Lantern Show</h2>
+          <p class="subhead">A slide lecture drawn from your notes, ready to present or export.</p>
+          <div class="btn-row">
+            <button class="btn btn-primary" id="draftSlidesBtn">▶ GENERATE SLIDES</button>
+            <button class="btn" id="randomThemeBtn">🎲 RANDOM DESIGN</button>
+            <button class="btn btn-quiet" id="exportPptxBtn" style="display:none;">⬇ POWERPOINT (.PPTX)</button>
+          </div>
+          <div class="pixel-slide-toolbar" id="slideToolbar">
+            <label>THEME <select id="slideThemeSelect" class="plain">
+              <option value="random">🎲 Random</option>
+              <option value="arcade">🕹 Arcade</option>
+              <option value="neon">⚡ Neon</option>
+              <option value="crt">📺 CRT</option>
+              <option value="paper">📜 Paper</option>
+              <option value="space">🚀 Space</option>
+            </select></label>
+            <label>LAYOUT <select id="slideLayoutSelect" class="plain">
+              <option value="auto">Auto</option>
+              <option value="title">Title</option>
+              <option value="split">Split</option>
+              <option value="cards">Cards</option>
+              <option value="quote">Quote</option>
+            </select></label>
+            <button class="btn btn-quiet" id="addSlideBtn">＋ ADD</button>
+            <button class="btn btn-quiet" id="duplicateSlideBtn">▣ DUPLICATE</button>
+            <button class="btn btn-quiet" id="deleteSlideBtn">✕ DELETE</button>
+            <button class="btn btn-quiet" id="presentSlidesBtn">⛶ PRESENT</button>
+          </div>
+          <p class="notice" id="lanternNotice"></p>
+          <div class="lantern-stage-wrap">
+            <div class="lantern-screen pixel-slide-screen" id="lanternFrame" style="margin-top:18px;">
+              <p class="muted" style="text-align:center;">No slides have been drafted yet.</p>
+            </div>
+          </div>
+          <div class="slide-strip" id="slideStrip"></div>
+          <div class="lantern-controls">
+            <button class="knob" id="lanternPrev" disabled>‹</button>
+            <span class="lantern-counter" id="lanternCounter"></span>
+            <button class="knob" id="lanternNext" disabled>›</button>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <footer class="foot">Composed on your own device, from your own papers. Nothing here is sent anywhere but to your own correspondent.</footer>
+</div>
+
+
+<section class="arcade-toolkit" id="studyToolkit">
+  <div class="arcade-panel-title"><span>★ STUDY ARCADE ★</span><small>PRESS START TO LEARN</small></div>
+  <div class="tool-grid">
+    <button class="arcade-tool" id="focusTimerBtn"><b>01</b><span>FOCUS TIMER</span><small>25 MIN</small></button>
+    <button class="arcade-tool" id="quickReviewBtn"><b>02</b><span>QUICK REVIEW</span><small>KEY POINTS</small></button>
+    <button class="arcade-tool" id="studyStatsBtn"><b>03</b><span>STUDY STATS</span><small>YOUR SCORE</small></button>
+    <button class="arcade-tool" id="memoryBtn"><b>04</b><span>MEMORY MODE</span><small>RECALL</small></button>
+  </div>
+  <div class="arcade-status">
+    <span id="arcadeStatus">INSERT KNOWLEDGE • PRESS START</span>
+    <span id="focusClock">25:00</span>
+  </div>
+</section>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ---------- Pixel icons ---------- */
+  const ICONS = {
+    lamp:   ["00011000","00011000","00111100","01111110","00111100","00011000","01111110","11111111"],
+    books:  ["11111111","10000001","10000001","11111111","11111111","10000001","10000001","11111111"],
+    quill:  ["00000010","00000110","00001100","00011000","00110000","01100000","11000000","10000000"],
+    bell:   ["00011000","00111100","00111100","01111110","11111111","00000000","00011000","00011000"],
+    card:   ["11111111","10000001","10111101","10000001","10111101","10000001","10000001","11111111"],
+    envelope:["11111111","10000001","11000011","10100101","10011001","10000001","10000001","11111111"],
+    lantern:["00111100","01111110","01111110","00111100","00011000","00011000","00111100","01111110"]
+  };
+  function pixelIcon(key, color, size){
+    color = color || "currentColor"; size = size || 18;
+    const rows = ICONS[key]; const n = rows.length;
+    let rects = "";
+    for (let r=0; r<n; r++){
+      for (let c=0; c<n; c++){
+        if (rows[r][c] === "1") rects += '<rect x="'+c+'" y="'+r+'" width="1" height="1" fill="'+color+'"/>';
+      }
+    }
+    return '<svg class="pixel-icon" viewBox="0 0 '+n+' '+n+'" width="'+size+'" height="'+size+'" shape-rendering="crispEdges" aria-hidden="true">'+rects+'</svg>';
+  }
+  document.getElementById('logoMount').innerHTML = pixelIcon('lamp', 'var(--brass)', 30);
+
+  /* ---------- Tabs ---------- */
+  const TABS = [
+    { id:'reading',  label:'Reading Room',        icon:'books' },
+    { id:'digest',   label:'The Digest',          icon:'quill' },
+    { id:'exam',     label:'Examination Hall',    icon:'bell' },
+    { id:'cards',    label:'Recitation Cards',    icon:'card' },
+    { id:'letters',  label:'Correspondence',      icon:'envelope' },
+    { id:'lantern',  label:'Magic Lantern Show',  icon:'lantern' }
+  ];
+  const tabNav = document.getElementById('tabNav');
+  TABS.forEach((t,i)=>{
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'tab-btn' + (i===0 ? ' active' : '');
+    b.dataset.tab = t.id;
+    b.innerHTML = pixelIcon(t.icon, 'var(--ink)', 18) + '<span>' + t.label + '</span>';
+    b.addEventListener('click', ()=>switchTab(t.id));
+    tabNav.appendChild(b);
+  });
+  function switchTab(id){
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.toggle('active', b.dataset.tab===id));
+    document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('active', p.id==='panel-'+id));
+  }
+
+  /* ---------- Helpers ---------- */
+  function esc(s){
+    return String(s==null?'':s).replace(/[&<>"']/g, function(c){
+      return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c];
+    });
+  }
+  function slugify(s){
+    return String(s||'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'').slice(0,60) || 'file';
+  }
+  function wordCount(t){ return (t||'').split(/\s+/).filter(Boolean).length; }
+  function notify(id, msg, timeout){
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.textContent = msg;
+    el.classList.add('show');
+    clearTimeout(el._t);
+    if (timeout !== 0) el._t = setTimeout(()=>el.classList.remove('show'), timeout || 6000);
+  }
+  function clearNotice(id){
+    const el = document.getElementById(id);
+    if (el) { el.textContent = ''; el.classList.remove('show'); }
+  }
+  function loadScript(src){
+    return new Promise((resolve, reject)=>{
+      const s = document.createElement('script');
+      s.src = src; s.onload = resolve; s.onerror = ()=>reject(new Error('failed to load '+src));
+      document.head.appendChild(s);
+    });
+  }
+  function blobToDataURL(blob){
+    return new Promise((resolve, reject)=>{
+      const r = new FileReader();
+      r.onload = ()=>resolve(r.result);
+      r.onerror = reject;
+      r.readAsDataURL(blob);
+    });
+  }
+
+  function errorCopy(code){
+    switch(code){
+      case 'not_granted': return 'Permission to reach the correspondent was declined. You may allow it and try again.';
+      case 'rate_limited': return 'The wire is busy just now — wait a moment and try again.';
+      case 'refused': return 'The correspondent declined to answer that. Try rephrasing your request.';
+      case 'invalid_json':
+      case 'empty_completion': return 'The reply arrived garbled. Try again, perhaps with fewer materials at once.';
+      case 'prompt_too_large': return 'There is too much here to read at once. Remove a source or two and try again.';
+      case 'images_unavailable': return 'Photographs cannot be examined from this window; text materials still work.';
+      case 'image_rejected': return 'One of the photographs could not be read. Try a different file.';
+      case 'session_expired': return 'Please sign in again to continue.';
+      case 'sampling_disabled':
+      case 'not_declared': return 'The correspondent is not available for this account.';
+      case 'cancelled': return '';
+      case 'upstream_error': return 'The wire went quiet unexpectedly. Please try again.';
+      default: return 'Something went awry at the wire office. Please try again.';
+    }
+  }
+  function downloadErrorCopy(code){
+    switch(code){
+      case 'declined': return '';
+      case 'rate_limited': return 'Please wait a moment before saving again.';
+      case 'too_large': return 'This file is too large to save from here.';
+      case 'unavailable':
+      case 'not_granted':
+      case 'capability_disabled':
+      case 'capability_removed': return 'Saving files is not available in this window.';
+      default: return 'The file could not be saved. Please try again.';
+    }
+  }
+
+  /* ---------- State ---------- */
+  const state = {
+    sources: [],
+    digest: null,
+    quiz: null, quizAnswers: {}, quizSubmitted: false, examCount: 10,
+    cards: null,
+    chatTurns: [],
+    slides: null, slideIndex: 0
+  };
+  let srcCounter = 0;
+
+  /* ---------- Standalone capabilities ---------- */
+  // This version does not depend on window.claude. Everything needed for
+  // uploading, reading, generating study material, and saving files runs
+  // locally in the browser.
+  let sampleFn = true;
+  let downloadsCap = true;
+
+  function initCapabilities(){
+    document.getElementById('capBanner').classList.add('show');
+    updateGenerateButtons();
+  }
+
+  function updateGenerateButtons(){
+    ['composeDigestBtn','setExamBtn','cutCardsBtn','draftSlidesBtn','sendLetterBtn'].forEach(id=>{
+      const el = document.getElementById(id);
+      if (el) el.disabled = false;
+    });
+  }
+
+  function localDownload(filename, data, mime){
+    const blob = data instanceof Blob ? data : new Blob([data], {type: mime || 'application/octet-stream'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    a.style.display = 'none';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(()=>URL.revokeObjectURL(url), 1500);
+  }
+
+  async function downloadText(filename, content, noticeId){
+    try {
+      localDownload(filename, content, filename.toLowerCase().endsWith('.md') ? 'text/markdown;charset=utf-8' : 'text/plain;charset=utf-8');
+    } catch(e) {
+      notify(noticeId, 'The file could not be saved. Please try again.', 0);
+    }
+  }
+
+  function cleanText(s){
+    return String(s || '')
+      .replace(/\u00a0/g, ' ')
+      .replace(/[ \t]+/g, ' ')
+      .replace(/\n{3,}/g, '\n\n')
+      .trim();
+  }
+
+  function sentences(text){
+    return cleanText(text).split(/(?<=[.!?])\s+/).map(s=>s.trim()).filter(Boolean);
+  }
+
+  function localTerms(text, limit){
+    const stop = new Set(('the and for that this with from are was were have has had not but you your their there which what when where into about than then them they his her its our out can could should would will just also very more most some such only using used use these those study material materials page chapter section'.split(/\s+/)));
+    const freq = {};
+    (text.toLowerCase().match(/[a-z][a-z'-]{3,}/g) || []).forEach(w=>{
+      if (!stop.has(w)) freq[w] = (freq[w] || 0) + 1;
+    });
+    return Object.entries(freq).sort((a,b)=>b[1]-a[1]).slice(0, limit || 10).map(x=>x[0]);
+  }
+
+  function localSummary(text, maxSentences){
+    const ss = sentences(text);
+    return ss.slice(0, maxSentences || 8);
+  }
+
+  function makeLocalDigest(){
+    const text = buildContextText(30000);
+    if (!text) return null;
+    const sourceNames = state.sources.filter(s=>s.text).map(s=>s.name);
+    const ss = sentences(text);
+    const chunks = [];
+    const chunkSize = Math.max(2, Math.ceil(Math.min(ss.length, 24) / 4));
+    for(let i=0;i<Math.min(ss.length, 24);i+=chunkSize){
+      chunks.push(ss.slice(i,i+chunkSize));
+    }
+    const terms = localTerms(text, 10);
+    return {
+      title: 'Study Digest',
+      sections: chunks.slice(0,8).map((chunk,i)=>({
+        heading: sourceNames[i] || ('Key Points ' + (i+1)),
+        bullets: chunk.slice(0,5)
+      })),
+      keyTerms: terms.map(term=>{
+        const idx = text.toLowerCase().indexOf(term.toLowerCase());
+        const context = idx >= 0 ? sentences(text.slice(Math.max(0,idx-80), idx+260))[0] : '';
+        return {term: term, definition: context || 'Term found in the uploaded study material.'};
+      })
+    };
+  }
+
+  function makeLocalQuiz(count){
+    const text = buildContextText(30000);
+    const ss = sentences(text);
+    if (!ss.length) return null;
+    const n = Math.min(count || 10, Math.max(1, ss.length));
+    const terms = localTerms(text, Math.max(n, 8));
+    const questions = [];
+    for(let i=0;i<n;i++){
+      const answer = ss[i % ss.length];
+      const key = terms[i % Math.max(1,terms.length)] || 'the material';
+      const distractors = terms.filter(t=>t !== key).slice(0,3);
+      while(distractors.length < 3) distractors.push('Not stated in the uploaded material');
+      questions.push({
+        question: 'Which statement is supported by the uploaded material?',
+        options: [answer, 'The material states that ' + distractors[0] + ' is unrelated.', 'The material says the opposite of this point.', 'The material does not discuss this topic.'],
+        correctIndex: 0,
+        explanation: 'This statement is taken directly from the uploaded material.'
+      });
+    }
+    return {title:'Practice Examination', questions};
+  }
+
+  function makeLocalCards(){
+    const text = buildContextText(30000);
+    const ss = sentences(text);
+    const terms = localTerms(text, 12);
+    return terms.map((term,i)=>({
+      front: term.charAt(0).toUpperCase()+term.slice(1),
+      back: ss[i % Math.max(1,ss.length)] || 'See the uploaded material for this term.'
+    }));
+  }
+
+  const SLIDE_THEMES = {
+    arcade:{bg:'#17120f',panel:'#2a2019',ink:'#ffe9ad',accent:'#e04b35',accent2:'#e0a63a',font:'Courier New'},
+    neon:{bg:'#111126',panel:'#191944',ink:'#f4f4ff',accent:'#ff4fd8',accent2:'#4de8ff',font:'Courier New'},
+    crt:{bg:'#06150b',panel:'#0b2413',ink:'#b8ffbf',accent:'#4cff70',accent2:'#9affb1',font:'Courier New'},
+    paper:{bg:'#eee1c3',panel:'#e1cea0',ink:'#241b15',accent:'#a9342b',accent2:'#c99532',font:'Georgia'},
+    space:{bg:'#090b20',panel:'#151b3a',ink:'#e8ecff',accent:'#7c8cff',accent2:'#ffca5f',font:'Courier New'}
+  };
+  function pickSlideTheme(){
+    const chosen = document.getElementById('slideThemeSelect')?.value || 'random';
+    if(chosen !== 'random') return chosen;
+    const keys = Object.keys(SLIDE_THEMES);
+    return keys[Math.floor(Math.random()*keys.length)];
+  }
+  function randomLayout(i){
+    const layouts=['auto','title','split','cards','quote'];
+    return layouts[Math.floor(Math.random()*layouts.length)];
+  }
+  function makeLocalSlides(){
+    const d = makeLocalDigest();
+    if (!d) return null;
+    const theme = pickSlideTheme();
+    const slides = (d.sections || []).slice(0,10).map((sec,i)=>{
+      const bullets=(sec.bullets||[]).slice(0,5);
+      return {
+        title:sec.heading || ('LEVEL '+String(i+1).padStart(2,'0')),
+        bullets,
+        layout:(document.getElementById('slideLayoutSelect')?.value || 'auto') === 'auto' ? randomLayout(i) : document.getElementById('slideLayoutSelect').value
+      };
+    });
+    return {title:'Study Review', theme, slides};
+  }
+    /* ---------- Sources / Reading Room ---------- */
+  const dropzone = document.getElementById('dropzone');
+  const fileInput = document.getElementById('fileInput');
+  const chooseFilesBtn = document.getElementById('chooseFilesBtn');
+  chooseFilesBtn.addEventListener('click', e=>{ e.stopPropagation(); fileInput.click(); });
+  dropzone.addEventListener('click', e=>{
+    if (e.target.closest('button')) return;
+    fileInput.click();
+  });
+  fileInput.addEventListener('change', ()=>{ handleFiles(fileInput.files); fileInput.value = ''; });
+  ['dragenter','dragover'].forEach(ev=>dropzone.addEventListener(ev, e=>{ e.preventDefault(); dropzone.classList.add('drag'); }));
+  ['dragleave','drop'].forEach(ev=>dropzone.addEventListener(ev, e=>{ e.preventDefault(); dropzone.classList.remove('drag'); }));
+  dropzone.addEventListener('drop', e=>{ if (e.dataTransfer && e.dataTransfer.files) handleFiles(e.dataTransfer.files); });
+
+  let pdfjsPromise = null;
+  function loadPdfJs(){
+    if (pdfjsPromise) return pdfjsPromise;
+    pdfjsPromise = loadScript('https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js').then(()=>{
+      window.pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+      return window.pdfjsLib;
+    });
+    return pdfjsPromise;
+  }
+  let mammothPromise = null;
+  function loadMammoth(){
+    if (mammothPromise) return mammothPromise;
+    mammothPromise = loadScript('https://cdn.jsdelivr.net/npm/mammoth@1.8.0/mammoth.browser.min.js')
+      .then(()=>window.mammoth);
+    return mammothPromise;
+  }
+
+  async function extractPdfText(file, onProgress){
+    const pdfjsLib = await loadPdfJs();
+    const buf = await file.arrayBuffer();
+    const doc = await pdfjsLib.getDocument({ data: buf }).promise;
+    let text = '';
+    for (let i=1; i<=doc.numPages; i++){
+      if (onProgress) onProgress(i, doc.numPages);
+      const page = await doc.getPage(i);
+      const content = await page.getTextContent();
+      text += content.items.map(it=>it.str).join(' ') + '\n\n';
+    }
+    return text.trim();
+  }
+
+  async function handleFiles(fileList){
+    const files = Array.from(fileList);
+    for (const file of files){
+      const id = 'src' + (++srcCounter);
+      const isImage = file.type.indexOf('image/') === 0;
+      const isPdf = file.type === 'application/pdf' || /\.pdf$/i.test(file.name);
+      const isDocx = file.type === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' || /\.docx$/i.test(file.name);
+      const isTextFile = /\.(txt|md|html?|csv)$/i.test(file.name) || file.type.startsWith('text/');
+      const kind = isImage ? 'image' : (isPdf ? 'pdf' : (isDocx ? 'docx' : 'text'));
+      const src = { id: id, name: file.name, kind: kind, text: '', blob: null, dataUrl: null, status: 'reading…' };
+      state.sources.push(src);
+      renderSources();
+      try {
+        if (kind === 'pdf') {
+          src.text = await extractPdfText(file, (p,t)=>{ src.status = 'reading page ' + p + ' of ' + t; renderSources(); });
+          src.status = 'ready';
+        } else if (kind === 'image') {
+          src.blob = file;
+          src.dataUrl = await blobToDataURL(file);
+          src.status = 'ready';
+        } else if (kind === 'docx') {
+          await loadMammoth();
+          const ab = await file.arrayBuffer();
+          const result = await window.mammoth.extractRawText({arrayBuffer: ab});
+          src.text = cleanText(result.value);
+          src.status = 'ready';
+        } else {
+          src.text = await file.text();
+          src.status = 'ready';
+        }
+      } catch(e) {
+        src.status = 'could not be read';
+      }
+      renderSources();
+    }
+  }
+
+  function removeSource(id){
+    state.sources = state.sources.filter(s=>s.id !== id);
+    renderSources();
+  }
+
+  function renderSources(){
+    const list = document.getElementById('sourceList');
+    const empty = document.getElementById('sourceEmpty');
+    if (!state.sources.length) { list.innerHTML = ''; empty.style.display = 'block'; return; }
+    empty.style.display = 'none';
+    list.innerHTML = state.sources.map(s=>{
+      let meta;
+      if (s.status !== 'ready') meta = s.status;
+      else if (s.kind === 'image') meta = 'photograph';
+      else meta = wordCount(s.text) + ' words';
+      const thumb = (s.kind === 'image' && s.dataUrl)
+        ? '<img class="src-thumb" src="'+s.dataUrl+'" alt="">'
+        : '<span class="src-icon">'+pixelIcon(s.kind==='pdf' ? 'card' : 'books', 'var(--brass)', 20)+'</span>';
+      return '<li class="source-card">'+thumb+
+        '<div class="src-info"><span class="src-name">'+esc(s.name)+'</span><span class="src-meta">'+esc(meta)+'</span></div>'+
+        '<button class="src-remove" data-id="'+s.id+'" aria-label="Remove">×</button></li>';
+    }).join('');
+    list.querySelectorAll('.src-remove').forEach(b=>b.addEventListener('click', ()=>removeSource(b.dataset.id)));
+  }
+
+  function buildContextText(budget){
+    budget = budget || 16000;
+    let out = '';
+    for (const s of state.sources){
+      if (s.kind === 'image' || !s.text) continue;
+      const header = '\n\n--- Source: ' + s.name + ' ---\n';
+      if (out.length + header.length + s.text.length > budget){
+        const remaining = budget - out.length - header.length;
+        if (remaining > 200) out += header + s.text.slice(0, remaining);
+        break;
+      }
+      out += header + s.text;
+    }
+    return out.trim();
+  }
+  function collectImages(max){
+    max = max || 4;
+    return state.sources.filter(s=>s.kind === 'image' && s.blob).slice(0, max).map(s=>s.blob);
+  }
+  function hasMaterial(){
+    return state.sources.some(s=>(s.kind !== 'image' && s.text) || (s.kind === 'image' && s.blob));
+  }
+
+  async function downloadText(filename, content, noticeId){
+    if (!downloadsCap) { notify(noticeId, 'Saving files is not available in this window.'); return; }
+    try {
+      await downloadsCap.save({ filename: filename, data: content });
+    } catch(e) {
+      const msg = downloadErrorCopy(e && e.code);
+      if (msg) notify(noticeId, msg);
+    }
+  }
+
+  /* ================= DIGEST ================= */
+  const composeDigestBtn = document.getElementById('composeDigestBtn');
+  const downloadDigestBtn = document.getElementById('downloadDigestBtn');
+  composeDigestBtn.addEventListener('click', composeDigest);
+  downloadDigestBtn.addEventListener('click', ()=>{
+    if (!state.digest) return;
+    downloadText(slugify(state.digest.title || 'study-digest') + '.md', digestToMarkdown(state.digest), 'digestNotice');
+  });
+
+  async function composeDigest(){
+    clearNotice('digestNotice');
+    if (!hasMaterial()) { notify('digestNotice', 'Add a source in the Reading Room first.'); return; }
+    composeDigestBtn.disabled = true;
+    document.getElementById('digestBody').innerHTML = '<p class="thinking">The Digest is being composed</p>';
+    try {
+      const data = makeLocalDigest();
+      if (!data) throw new Error('No readable text');
+      state.digest = data;
+      renderDigest();
+      downloadDigestBtn.style.display = 'inline-block';
+    } catch(e) {
+      document.getElementById('digestBody').innerHTML = '';
+      const msg = errorCopy(e && e.code);
+      if (msg) notify('digestNotice', msg, 0);
+    } finally {
+      composeDigestBtn.disabled = !sampleFn;
+    }
+  }
+  function renderDigest(){
+    const d = state.digest;
+    const body = document.getElementById('digestBody');
+    if (!d) { body.innerHTML = ''; return; }
+    let html = '<h3 class="sheet-title">' + esc(d.title || 'Study Digest') + '</h3>';
+    (d.sections || []).forEach(sec=>{
+      html += '<div class="digest-section"><h3>' + esc(sec.heading) + '</h3><ul>' +
+        (sec.bullets || []).map(b=>'<li>' + esc(b) + '</li>').join('') + '</ul></div>';
+    });
+    if (d.keyTerms && d.keyTerms.length) {
+      html += '<dl class="glossary">' + d.keyTerms.map(kt=>
+        '<dt>' + esc(kt.term) + '</dt><dd>' + esc(kt.definition) + '</dd>').join('') + '</dl>';
+    }
+    body.innerHTML = html;
+  }
+  function digestToMarkdown(d){
+    let out = '# ' + (d.title || 'Study Digest') + '\n\n';
+    (d.sections || []).forEach(sec=>{
+      out += '## ' + sec.heading + '\n';
+      (sec.bullets || []).forEach(b=>{ out += '- ' + b + '\n'; });
+      out += '\n';
+    });
+    if (d.keyTerms && d.keyTerms.length) {
+      out += '## Key Terms\n';
+      d.keyTerms.forEach(kt=>{ out += '**' + kt.term + '**: ' + kt.definition + '\n\n'; });
+    }
+    return out;
+  }
+
+  /* ================= EXAMINATION ================= */
+  document.getElementById('examCountChoice').addEventListener('click', e=>{
+    const b = e.target.closest('button');
+    if (!b) return;
+    state.examCount = +b.dataset.n;
+    document.querySelectorAll('#examCountChoice button').forEach(x=>x.classList.toggle('active', x===b));
+  });
+  document.getElementById('setExamBtn').addEventListener('click', setExam);
+  document.getElementById('downloadExamBtn').addEventListener('click', ()=>{
+    if (!state.quiz) return;
+    downloadText(slugify(state.quiz.title || 'examination') + '.txt', quizToText(state.quiz), 'examNotice');
+  });
+
+  async function setExam(){
+    clearNotice('examNotice');
+    if (!hasMaterial()) { notify('examNotice', 'Add a source in the Reading Room first.'); return; }
+    const btn = document.getElementById('setExamBtn');
+    btn.disabled = true;
+    document.getElementById('examBody').innerHTML = '<p class="thinking">The Examination is being set</p>';
+    try {
+      const data = makeLocalQuiz(state.examCount);
+      if (!data) throw new Error('No readable text');
+      state.quiz = data;
+      state.quizAnswers = {};
+      state.quizSubmitted = false;
+      renderQuiz();
+      document.getElementById('downloadExamBtn').style.display = 'inline-block';
+    } catch(e) {
+      document.getElementById('examBody').innerHTML = '';
+      const msg = errorCopy(e && e.code);
+      if (msg) notify('examNotice', msg, 0);
+    } finally {
+      btn.disabled = !sampleFn;
+    }
+  }
+  function renderQuiz(){
+    const panel = document.getElementById('examBody');
+    const q = state.quiz;
+    if (!q || !q.questions) { panel.innerHTML = ''; return; }
+    let html = '<h3 class="sheet-title">' + esc(q.title || 'Examination') + '</h3>';
+    if (state.quizSubmitted) {
+      let correct = 0;
+      q.questions.forEach((qq,i)=>{ if (state.quizAnswers[i] === qq.correctIndex) correct++; });
+      html += '<p class="score-line">Score: ' + correct + ' of ' + q.questions.length + '</p>';
+    }
+    q.questions.forEach((qq,i)=>{
+      const chosen = state.quizAnswers[i];
+      html += '<div class="exam-q"><p class="exam-q-text">' + (i+1) + '. ' + esc(qq.question) + '</p><div class="exam-options">';
+      (qq.options || []).forEach((opt,oi)=>{
+        let cls = 'exam-opt';
+        if (state.quizSubmitted) {
+          if (oi === qq.correctIndex) cls += ' correct';
+          else if (oi === chosen) cls += ' incorrect';
+        } else if (oi === chosen) cls += ' selected';
+        html += '<button type="button" class="'+cls+'" data-q="'+i+'" data-o="'+oi+'" '+(state.quizSubmitted?'disabled':'')+'>' +
+          String.fromCharCode(65+oi) + '. ' + esc(opt) + '</button>';
+      });
+      html += '</div>';
+      if (state.quizSubmitted) html += '<p class="exam-explain">' + esc(qq.explanation || '') + '</p>';
+      html += '</div>';
+    });
+    if (!state.quizSubmitted) html += '<button id="submitExamBtn" class="btn btn-primary">Submit Examination</button>';
+    else html += '<button id="retakeExamBtn" class="btn">Set a New Examination</button>';
+    panel.innerHTML = html;
+    panel.querySelectorAll('.exam-opt').forEach(b=>b.addEventListener('click', ()=>{
+      state.quizAnswers[+b.dataset.q] = +b.dataset.o;
+      renderQuiz();
+    }));
+    const submitBtn = document.getElementById('submitExamBtn');
+    if (submitBtn) submitBtn.addEventListener('click', ()=>{ state.quizSubmitted = true; renderQuiz(); });
+    const retakeBtn = document.getElementById('retakeExamBtn');
+    if (retakeBtn) retakeBtn.addEventListener('click', ()=>{
+      state.quiz = null; state.quizAnswers = {}; state.quizSubmitted = false;
+      renderQuiz(); document.getElementById('downloadExamBtn').style.display = 'none';
+    });
+  }
+  function quizToText(q){
+    let out = q.title + '\n' + '='.repeat((q.title||'').length) + '\n\n';
+    q.questions.forEach((qq,i)=>{
+      out += (i+1) + '. ' + qq.question + '\n';
+      qq.options.forEach((opt,oi)=>{ out += '   ' + String.fromCharCode(65+oi) + '. ' + opt + '\n'; });
+      out += '   Answer: ' + String.fromCharCode(65+qq.correctIndex) + ' — ' + (qq.explanation||'') + '\n\n';
+    });
+    return out;
+  }
+
+  /* ================= RECITATION CARDS ================= */
+  document.getElementById('cutCardsBtn').addEventListener('click', cutCards);
+  document.getElementById('shuffleCardsBtn').addEventListener('click', shuffleCards);
+
+  async function cutCards(){
+    clearNotice('cardsNotice');
+    if (!hasMaterial()) { notify('cardsNotice', 'Add a source in the Reading Room first.'); return; }
+    const btn = document.getElementById('cutCardsBtn');
+    btn.disabled = true;
+    document.getElementById('cardsGrid').innerHTML = '';
+    notify('cardsNotice', 'Cutting the cards…', 0);
+    try {
+      const data = makeLocalCards();
+      if (!data || !data.length) throw new Error('No readable text');
+      state.cards = Array.isArray(data) ? data : (data.cards || []);
+      clearNotice('cardsNotice');
+      renderCards();
+      document.getElementById('shuffleCardsBtn').style.display = 'inline-block';
+    } catch(e) {
+      const msg = errorCopy(e && e.code);
+      notify('cardsNotice', msg || '', 0);
+    } finally {
+      btn.disabled = !sampleFn;
+    }
+  }
+  function renderCards(){
+    const wrap = document.getElementById('cardsGrid');
+    if (!state.cards || !state.cards.length) { wrap.innerHTML = ''; return; }
+    wrap.innerHTML = state.cards.map(function(c,i){
+      return '<div class="flip-card" data-i="'+i+'"><div class="flip-inner">' +
+        '<div class="flip-face flip-front">' + esc(c.front) + '</div>' +
+        '<div class="flip-face flip-back">' + esc(c.back) + '</div>' +
+        '</div></div>';
+    }).join('');
+    wrap.querySelectorAll('.flip-card').forEach(el=>el.addEventListener('click', ()=>el.classList.toggle('flipped')));
+  }
+  function shuffleCards(){
+    if (!state.cards) return;
+    for (let i=state.cards.length-1; i>0; i--){
+      const j = Math.floor(Math.random()*(i+1));
+      const tmp = state.cards[i]; state.cards[i] = state.cards[j]; state.cards[j] = tmp;
+    }
+    renderCards();
+  }
+
+  /* ================= CORRESPONDENCE ================= */
+  const chatLog = document.getElementById('chatLog');
+  document.getElementById('sendLetterBtn').addEventListener('click', sendLetter);
+  document.getElementById('chatInput').addEventListener('keydown', e=>{
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendLetter(); }
+  });
+  document.getElementById('clearLettersBtn').addEventListener('click', ()=>{
+    state.chatTurns = [];
+    renderChat();
+  });
+
+  function renderChat(){
+    chatLog.innerHTML = state.chatTurns.map(function(t){
+      const cls = t.role === 'user' ? 'mine' : 'theirs';
+      const who = t.role === 'user' ? 'You write:' : 'The correspondent replies:';
+      return '<div class="letter '+cls+'"><span class="who">'+who+'</span>' + esc(t.content) + '</div>';
+    }).join('');
+    chatLog.scrollTop = chatLog.scrollHeight;
+  }
+
+  async function sendLetter(){
+    clearNotice('lettersNotice');
+    const input = document.getElementById('chatInput');
+    const question = input.value.trim();
+    if (!question) return;
+    if (!sampleFn) { notify('lettersNotice', errorCopy('not_granted'), 0); return; }
+    input.value = '';
+    state.chatTurns.push({ role: 'user', content: question });
+    if (state.chatTurns.length > 12) state.chatTurns = state.chatTurns.slice(-12);
+    renderChat();
+    const pendingDiv = document.createElement('div');
+    pendingDiv.className = 'letter theirs';
+    pendingDiv.innerHTML = '<span class="who">The correspondent replies:</span><span class="thinking">Thinking</span>';
+    chatLog.appendChild(pendingDiv);
+    chatLog.scrollTop = chatLog.scrollHeight;
+    const sendBtn = document.getElementById('sendLetterBtn');
+    sendBtn.disabled = true;
+    try {
+      const ctx = buildContextText(12000);
+      const q = question.toLowerCase();
+      let reply;
+      if (!ctx) {
+        reply = 'Upload a text-based study file first so I can answer from it.';
+      } else {
+        const ss = sentences(ctx);
+        const terms = localTerms(ctx, 20);
+        const hit = terms.find(t=>q.includes(t));
+        if (hit) {
+          const relevant = ss.filter(s=>s.toLowerCase().includes(hit)).slice(0,3);
+          reply = relevant.length
+            ? 'From your uploaded material:\n\n' + relevant.join(' ')
+            : 'I found the topic "' + hit + '" in the material, but there is not enough nearby text to answer precisely.';
+        } else {
+          reply = 'I could not find a clear match for that question in the uploaded material. Try using a key term or phrase from the file.';
+        }
+      }
+      pendingDiv.innerHTML = '<span class="who">The correspondent replies:</span>' + esc(reply).replace(/\n/g,'<br>');
+      state.chatTurns.push({ role: 'assistant', content: reply });
+      renderChat();
+    } catch(e) {
+      pendingDiv.remove();
+      state.chatTurns.pop();
+      renderChat();
+      const msg = errorCopy(e && e.code);
+      if (msg) notify('lettersNotice', msg, 0);
+    } finally {
+      sendBtn.disabled = false;
+    }
+  }
+
+  /* ================= MAGIC LANTERN SHOW / PIXEL PRESENTATION STUDIO ================= */
+  document.getElementById('draftSlidesBtn').addEventListener('click', draftSlides);
+  document.getElementById('randomThemeBtn').addEventListener('click', randomizePresentation);
+  document.getElementById('exportPptxBtn').addEventListener('click', exportPptx);
+  document.getElementById('addSlideBtn').addEventListener('click', addSlide);
+  document.getElementById('duplicateSlideBtn').addEventListener('click', duplicateSlide);
+  document.getElementById('deleteSlideBtn').addEventListener('click', deleteSlide);
+  document.getElementById('presentSlidesBtn').addEventListener('click', startPresentation);
+  document.getElementById('slideThemeSelect').addEventListener('change', ()=>{ if(state.slides){state.slides.theme=pickSlideTheme();renderLantern();} });
+  document.getElementById('slideLayoutSelect').addEventListener('change', ()=>{ if(state.slides){state.slides.slides[state.slideIndex].layout=document.getElementById('slideLayoutSelect').value;renderLantern();} });
+  document.getElementById('lanternPrev').addEventListener('click', ()=>{ state.slideIndex--; renderLantern(); });
+  document.getElementById('lanternNext').addEventListener('click', ()=>{ state.slideIndex++; renderLantern(); });
+
+  document.addEventListener('keydown', e=>{
+    if (document.getElementById('presentationOverlay')?.classList.contains('show')) {
+      if(e.key==='Escape') closePresentation();
+      if(e.key==='ArrowLeft' && state.slides && state.slideIndex>0){state.slideIndex--;renderLantern();renderPresentation();}
+      if(e.key==='ArrowRight' && state.slides && state.slideIndex<state.slides.slides.length-1){state.slideIndex++;renderLantern();renderPresentation();}
+      return;
+    }
+    if (!document.getElementById('panel-lantern').classList.contains('active') || !state.slides) return;
+    if (e.key === 'ArrowLeft' && state.slideIndex > 0) { state.slideIndex--; renderLantern(); }
+    if (e.key === 'ArrowRight' && state.slideIndex < state.slides.slides.length-1) { state.slideIndex++; renderLantern(); }
+  });
+
+  async function draftSlides(){
+    clearNotice('lanternNotice');
+    if (!hasMaterial()) { notify('lanternNotice','Add a source in the Reading Room first.'); return; }
+    const btn=document.getElementById('draftSlidesBtn'); btn.disabled=true;
+    document.getElementById('lanternFrame').innerHTML='<p class="thinking" style="text-align:center;">GENERATING PIXEL SLIDES...</p>';
+    try{
+      const data=makeLocalSlides();
+      if(!data) throw new Error('No readable text');
+      state.slides=data; state.slideIndex=0; renderLantern();
+      document.getElementById('exportPptxBtn').style.display='inline-block';
+      document.getElementById('slideToolbar').style.display='flex';
+    }catch(e){document.getElementById('lanternFrame').innerHTML='<p class="muted" style="text-align:center;">No slides have been drafted yet.</p>';notify('lanternNotice',errorCopy(e&&e.code),0);}
+    finally{btn.disabled=!sampleFn;}
+  }
+
+  function randomizePresentation(){
+    if(!state.slides){ if(hasMaterial()) return draftSlides(); notify('lanternNotice','Generate slides first.'); return; }
+    state.slides.theme=pickSlideTheme();
+    const layouts=['auto','title','split','cards','quote'];
+    state.slides.slides.forEach((s,i)=>s.layout=layouts[Math.floor(Math.random()*layouts.length)]);
+    renderLantern();
+    notify('lanternNotice','★ NEW RANDOM DESIGN APPLIED ★');
+  }
+
+  function renderSlideHTML(s,index,total,themeKey){
+    const t=SLIDE_THEMES[themeKey]||SLIDE_THEMES.arcade;
+    const layout=s.layout||'title';
+    const bullets=(s.bullets||[]);
+    let inner='';
+    if(layout==='quote'){
+      inner='<div class="pixel-slide-kicker">KEY IDEA</div><div class="slide-quote">'+esc(bullets[0]||s.title)+'</div>';
+    }else if(layout==='split'){
+      inner='<div><div class="pixel-slide-kicker">STUDY FILE</div><h3 class="pixel-slide-title">'+esc(s.title)+'</h3></div><div><ul class="pixel-slide-bullets">'+bullets.map(b=>'<li>'+esc(b)+'</li>').join('')+'</ul></div>';
+    }else if(layout==='cards'){
+      inner='<div class="pixel-slide-kicker">POWER UPS / KEY POINTS</div><h3 class="pixel-slide-title">'+esc(s.title)+'</h3><div class="slide-card-grid">'+bullets.slice(0,4).map((b,i)=>'<div class="slide-card-mini"><b>01.'+(i+1)+'</b><span>'+esc(b)+'</span></div>').join('')+'</div>';
+    }else{
+      inner='<div class="pixel-slide-kicker">'+(index===0?'START SCREEN':'STAGE '+String(index).padStart(2,'0'))+'</div><h3 class="pixel-slide-title">'+esc(s.title)+'</h3><ul class="pixel-slide-bullets">'+bullets.map(b=>'<li>'+esc(b)+'</li>').join('')+'</ul>';
+    }
+    return '<div class="pixel-slide-content">'+inner+'<div class="pixel-slide-meta">'+String(index+1).padStart(2,'0')+' / '+String(total).padStart(2,'0')+' • STUDY ARCADE</div></div>';
+  }
+
+  function renderLantern(){
+    const frame=document.getElementById('lanternFrame'), counter=document.getElementById('lanternCounter');
+    const prevBtn=document.getElementById('lanternPrev'), nextBtn=document.getElementById('lanternNext'), strip=document.getElementById('slideStrip');
+    if(!state.slides?.slides?.length){
+      frame.innerHTML='<p class="muted" style="text-align:center;">No slides have been drafted yet.</p>';
+      counter.textContent='';prevBtn.disabled=true;nextBtn.disabled=true;strip.innerHTML='';return;
+    }
+    state.slideIndex=Math.max(0,Math.min(state.slideIndex,state.slides.slides.length-1));
+    const s=state.slides.slides[state.slideIndex], t=SLIDE_THEMES[state.slides.theme]||SLIDE_THEMES.arcade;
+    frame.className='lantern-screen pixel-slide-screen slide-layout-'+(s.layout||'title');
+    frame.style.background='linear-gradient(135deg,'+t.bg+','+t.panel+')';
+    frame.style.color=t.ink;
+    frame.innerHTML=renderSlideHTML(s,state.slideIndex,state.slides.slides.length,state.slides.theme);
+    counter.textContent='STAGE '+(state.slideIndex+1)+' / '+state.slides.slides.length;
+    prevBtn.disabled=state.slideIndex<=0; nextBtn.disabled=state.slideIndex>=state.slides.slides.length-1;
+    document.getElementById('slideThemeSelect').value=state.slides.theme||'arcade';
+    document.getElementById('slideLayoutSelect').value=s.layout||'title';
+    strip.innerHTML=state.slides.slides.map((x,i)=>'<button class="slide-thumb '+(i===state.slideIndex?'active':'')+'" data-i="'+i+'"><span class="slide-thumb-num">STAGE '+String(i+1).padStart(2,'0')+'</span>'+esc(x.title)+'</button>').join('');
+    strip.querySelectorAll('.slide-thumb').forEach(b=>b.addEventListener('click',()=>{state.slideIndex=+b.dataset.i;renderLantern();}));
+  }
+
+  function addSlide(){
+    if(!state.slides) return notify('lanternNotice','Generate a presentation first.');
+    state.slides.slides.splice(state.slideIndex+1,0,{title:'NEW LEVEL',bullets:['Add your key point here.','Add another point here.'],layout:'title'});
+    state.slideIndex++; renderLantern(); notify('lanternNotice','NEW SLIDE ADDED');
+  }
+  function duplicateSlide(){
+    if(!state.slides?.slides?.length) return;
+    const copy=JSON.parse(JSON.stringify(state.slides.slides[state.slideIndex]));
+    copy.title=copy.title+' — COPY';
+    state.slides.slides.splice(state.slideIndex+1,0,copy);state.slideIndex++;renderLantern();
+  }
+  function deleteSlide(){
+    if(!state.slides?.slides?.length) return;
+    if(state.slides.slides.length===1) return notify('lanternNotice','Keep at least one slide.');
+    state.slides.slides.splice(state.slideIndex,1);state.slideIndex=Math.max(0,state.slideIndex-1);renderLantern();
+  }
+
+  function presentationHTML(){
+    if(!state.slides) return '';
+    const s=state.slides.slides[state.slideIndex], t=SLIDE_THEMES[state.slides.theme]||SLIDE_THEMES.arcade;
+    return '<div class="pixel-slide-screen slide-layout-'+(s.layout||'title')+'" style="background:linear-gradient(135deg,'+t.bg+','+t.panel+');color:'+t.ink+';width:100%;height:100%;border:0;">'+renderSlideHTML(s,state.slideIndex,state.slides.slides.length,state.slides.theme)+'</div>';
+  }
+  function startPresentation(){
+    if(!state.slides) return notify('lanternNotice','Generate a presentation first.');
+    document.getElementById('presentationOverlay').classList.add('show');
+    document.getElementById('presentationOverlay').setAttribute('aria-hidden','false');
+    renderPresentation();
+    document.documentElement.requestFullscreen?.().catch(()=>{});
+  }
+  function renderPresentation(){const f=document.getElementById('presentationFrame');if(f)f.innerHTML=presentationHTML();}
+  function closePresentation(){document.getElementById('presentationOverlay').classList.remove('show');document.getElementById('presentationOverlay').setAttribute('aria-hidden','true');if(document.fullscreenElement)document.exitFullscreen?.();}
+
+  let pptxPromise=null;
+  function loadPptxGen(){if(pptxPromise)return pptxPromise;pptxPromise=loadScript('https://cdn.jsdelivr.net/npm/pptxgenjs@3.12.0/dist/pptxgen.bundle.js').then(()=>window.PptxGenJS);return pptxPromise;}
+
+  async function exportPptx(){
+    clearNotice('lanternNotice');
+    if(!state.slides) return;
+    const btn=document.getElementById('exportPptxBtn');btn.disabled=true;notify('lanternNotice','BUILDING POWERPOINT...',0);
+    try{
+      const PptxGenJS=await loadPptxGen(), pres=new PptxGenJS();
+      pres.layout='LAYOUT_WIDE';
+      const t=SLIDE_THEMES[state.slides.theme]||SLIDE_THEMES.arcade;
+      const hex=c=>c.replace('#','');
+      let s=pres.addSlide();s.background={color:hex(t.bg)};
+      s.addText('★ '+(state.slides.title||'STUDY REVIEW')+' ★',{x:.7,y:2.2,w:12,h:1.2,fontFace:'Arial Black',fontSize:34,bold:true,color:hex(t.ink),align:'center'});
+      s.addText('PIXEL PRESENTATION STUDIO • STUDY ARCADE',{x:.7,y:3.7,w:12,h:.5,fontFace:'Courier New',fontSize:12,bold:true,color:hex(t.accent),align:'center'});
+      (state.slides.slides||[]).forEach((sl,i)=>{
+        const x=pres.addSlide();x.background={color:hex(t.bg)};
+        x.addShape(pres.ShapeType.rect,{x:0,y:0,w:13.333,h:.22,fill:{color:hex(t.accent)},line:{color:hex(t.accent)}});
+        x.addText(String(i+1).padStart(2,'0'),{x:.55,y:.35,w:.5,h:.35,fontFace:'Courier New',fontSize:11,bold:true,color:hex(t.accent2)});
+        x.addText(sl.title||'',{x:.55,y:.78,w:12,h:.8,fontFace:'Arial Black',fontSize:27,bold:true,color:hex(t.ink),margin:0});
+        x.addShape(pres.ShapeType.line,{x:.55,y:1.65,w:12.1,h:0,line:{color:hex(t.accent),width:2}});
+        const bullets=(sl.bullets||[]).slice(0,6);
+        const layout=sl.layout||'title';
+        if(layout==='quote'){
+          x.addText('“'+(bullets[0]||sl.title)+'”',{x:1.1,y:2.2,w:11,h:2.3,fontFace:'Arial',fontSize:25,bold:true,italic:true,color:hex(t.ink),align:'center',valign:'mid',margin:.2});
+        }else{
+          const items=bullets.map(b=>({text:b,options:{bullet:{indent:18},breakLine:true}}));
+          x.addText(items,{x:.85,y:2.0,w:11.5,h:4.5,fontFace:'Courier New',fontSize:17,color:hex(t.ink),breakLine:false,paraSpaceAfterPt:12,margin:.1});
+        }
+        x.addText('STUDY ARCADE',{x:.55,y:7.05,w:2,h:.25,fontFace:'Courier New',fontSize:8,color:hex(t.accent2)});
+      });
+      const blob=await pres.write({outputType:'blob'});
+      localDownload(slugify(state.slides.title||'study-slides')+'-'+state.slides.theme+'.pptx',blob,'application/vnd.openxmlformats-officedocument.presentationml.presentation');
+      notify('lanternNotice','★ POWERPOINT READY ★');
+    }catch(e){console.error(e);notify('lanternNotice','POWERPOINT EXPORT FAILED — CHECK YOUR CONNECTION AND TRY AGAIN.',0);}
+    finally{btn.disabled=false;}
+  }
+
+  /* ---------- Init ---------- */
+  renderSources();
+  initCapabilities();
+})();
+
+// Retro Study Arcade helpers
+(function(){
+  let focusSeconds = 25 * 60, focusRunning = false, focusTimer = null;
+  const clock = document.getElementById('focusClock');
+  const status = document.getElementById('arcadeStatus');
+  function renderClock(){
+    if(!clock) return;
+    const m = String(Math.floor(focusSeconds/60)).padStart(2,'0');
+    const s = String(focusSeconds%60).padStart(2,'0');
+    clock.textContent = m + ':' + s;
+  }
+  function setStatus(msg){ if(status) status.textContent = msg; }
+  document.getElementById('focusTimerBtn')?.addEventListener('click', ()=>{
+    focusRunning = !focusRunning;
+    if(focusRunning){
+      setStatus('FOCUS MODE ACTIVE • KEEP GOING!');
+      focusTimer = setInterval(()=>{
+        focusSeconds--;
+        renderClock();
+        if(focusSeconds <= 0){
+          clearInterval(focusTimer); focusRunning=false;
+          setStatus('★ FOCUS CLEAR! TAKE A SHORT BREAK ★');
+          try{ new AudioContext().resume(); }catch(e){}
+          alert('Focus session complete! Great work.');
+          focusSeconds=25*60; renderClock();
+        }
+      },1000);
+    } else {
+      clearInterval(focusTimer);
+      setStatus('FOCUS PAUSED • PRESS START TO CONTINUE');
+    }
+  });
+  document.getElementById('quickReviewBtn')?.addEventListener('click', ()=>{
+    const target = document.getElementById('composeDigestBtn') || document.getElementById('digestBtn');
+    if(target){ target.click(); setStatus('QUICK REVIEW GENERATED • CHECK YOUR NOTES'); }
+    else setStatus('UPLOAD A STUDY FILE TO START A REVIEW');
+  });
+  document.getElementById('studyStatsBtn')?.addEventListener('click', ()=>{
+    const count = (window.files || window.uploadedFiles || []).length;
+    setStatus('STUDY DATA • FILES LOADED: ' + count);
+  });
+  document.getElementById('memoryBtn')?.addEventListener('click', ()=>{
+    const target = document.getElementById('cutCardsBtn') || document.getElementById('cardsBtn');
+    if(target){ target.click(); setStatus('MEMORY MODE • FLASHCARDS READY'); }
+    else setStatus('UPLOAD NOTES THEN ACTIVATE MEMORY MODE');
+  });
+  renderClock();
+})();
+
+</script>
+
+<div class="presentation-overlay" id="presentationOverlay" aria-hidden="true">
+  <div class="presentation-frame" id="presentationFrame"></div>
+  <div class="presentation-hint">← → CHANGE SLIDE &nbsp; • &nbsp; ESC EXIT</div>
+</div>
+</body>
+</html>
